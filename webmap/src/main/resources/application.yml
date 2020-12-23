@@ -1,0 +1,9 @@
+server:
+  port: 8999
+spring:
+  application:
+    name: webmap
+  profiles:
+    active: dev
+  mvc:
+    static-path-pattern: /**
