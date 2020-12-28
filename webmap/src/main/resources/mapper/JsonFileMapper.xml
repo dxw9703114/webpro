@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dxw.mapper.JsonFileMapper">
+    <insert id="insert" parameterType="com.dxw.entity.po.JsonFile">
+        insert into json_file(id, type, name, url) value (#{id}, #{type}, #{name}, #{url})
+    </insert>
+
+    <delete id="delete">
+        delete from json_file where id = #{id}
+    </delete>
+
+    <update id="update" parameterType="com.dxw.entity.po.JsonFile">
+        update json_file set type = #{type}, name = #{name}, url=#{url}, create_time=#{createTime} where id = #{id}
+    </update>
+
+    <select id="selectById" parameterType="java.lang.Integer" resultType="com.dxw.entity.po.JsonFile">
+        select id, type, name, url, create_time from json_file where id = #{id}
+    </select>
+
+    <select id="selectList" parameterType="com.dxw.entity.po.JsonFile" resultType="java.util.List">
+        select id, type, name, url, create_time from json_file
+        <where>
+            <if test="type != null">
+                type = #{type}
+            </if>
+            <if test="type != null">
+                name = #{name}
+            </if>
+            <if test="type != null">
+                url = #{url}
+            </if>
+            <if test="type != null">
+                create_time = #{createTime}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectAll" resultType="com.dxw.entity.po.JsonFile">
+        select id, type, name, url, create_time from json_file
+    </select>
+</mapper>
