@@ -2,6 +2,7 @@ package com.dxw.service;
 
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.web.multipart.MultipartFile;
 
@@ -25,7 +26,9 @@ public interface FileService {
      * 文件下载
      * @author dxw
      * @date 2020/12/25 13:40
-     * @param path 路径
+     * @param response HttpServletResponse
+     * @param filename 文件名
+     * @return String
      */
-    void download(String path);
+    String download(HttpServletResponse response, String filename);
 }

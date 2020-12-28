@@ -1,13 +1,19 @@
 package com.dxw.service.impl;
 
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -49,7 +55,8 @@ public class FileServiceImpl implements FileService {
             return "不支持的文件格式";
         }
         Long size = file.getSize();
-        String path = tempFilePath + File.separator + UUID.randomUUID() + ".json";
+        String filename = UUID.randomUUID() + ".json";
+        String path = tempFilePath + File.separator + filename;
         File tempFile = new File(path);
         try {
             file.transferTo(tempFile);
@@ -57,13 +64,57 @@ public class FileServiceImpl implements FileService {
             e.printStackTrace();
         }
         log.info("上传成功: 文件名({}), 大小({}), 路径({})", name, size, path);
-        return path;
+        return filename;
     }
 
     @Override
-    public void download(String path) {
-        if (Objects.isNull(path) || Objects.equals(path, "")){
-            log.error("文件路径异常: {}", path);
+    public String download(HttpServletResponse response, String filename) {
+        if (Objects.isNull(filename) || Objects.equals(filename, "")){
+            log.error("参数异常: {}", filename);
+            return "参数异常";
         }
+        File file = new File(tempFilePath + File.separator + filename);
+        if (!file.exists()) {
+            log.error("文件不存在: {}", file);
+            return "文件不存在";
+        }
+        response.setHeader("content-type", "application/octet-stream");
+        response.setContentType("application/octet-stream");
+        try {
+            response.setHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode(filename, "UTF-8"));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        byte[] buffer = new byte[1024];
+        FileInputStream fis = null;
+        BufferedInputStream bis = null;
+        try {
+            fis = new FileInputStream(file);
+            bis = new BufferedInputStream(fis);
+            OutputStream os = response.getOutputStream();
+            int i = bis.read(buffer);
+            while (i != -1) {
+                os.write(buffer, 0, i);
+                i = bis.read(buffer);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (Objects.nonNull(bis)) {
+                try {
+                    bis.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (Objects.nonNull(fis)) {
+                try {
+                    fis.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return "下载成功";
     }
 }
