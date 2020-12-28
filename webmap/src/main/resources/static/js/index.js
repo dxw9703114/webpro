@@ -45,3 +45,30 @@ var map = new ol.Map({
 });
 map.addInteraction(mvoeInteraction);
 map.addInteraction(singleClickInteraction);
+
+function upload() {
+    var file = document.getElementById('file').files[0];
+    console.log(file);
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', '/file/json/actions/upload', true);
+    xhr.onload = function (e) {
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+                console.log(xhr.responseText);
+            } else {
+                console.error(xhr.statusText);
+            }
+        }
+    }
+    xhr.upload.onprogress = function(event) {
+        var per = Math.round(event.loaded/event.total*100);
+        console.log(per);
+    }
+    xhr.onerror = function (e) {
+        console.log(xhr.statusText);
+    }
+    xhr.setRequestHeader("params", {file: file});
+    var data = new FormData();
+    data.append("file", file);
+    xhr.send(data);
+}

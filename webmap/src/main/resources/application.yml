@@ -7,3 +7,5 @@ spring:
     active: dev
   mvc:
     static-path-pattern: /**
+file:
+  temp: D:\temp
