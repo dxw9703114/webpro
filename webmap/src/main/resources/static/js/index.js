@@ -28,6 +28,7 @@ var mvoeInteraction = new ol.interaction.Pointer({
             var featureInfo = feature[0].getProperties();
             var box = document.getElementById("box");
             box.innerHTML = "类型: " + featureYype + "<br>名称: " + featureInfo.name + "<br>级别: " + featureInfo.level;
+            box.style.display = 'block';
         }
     }
 });
@@ -46,7 +47,6 @@ var map = new ol.Map({
 map.addInteraction(mvoeInteraction);
 map.addInteraction(singleClickInteraction);
 
-var filename = null;
 function upload() {
     var file = document.getElementById('file').files[0];
     console.log(file);
@@ -56,7 +56,6 @@ function upload() {
         if (xhr.readyState === 4) {
             if (xhr.status === 200) {
                 console.log(xhr.responseText);
-                filename = xhr.responseText;
             } else {
                 console.error(xhr.statusText);
             }
@@ -79,3 +78,26 @@ function download() {
         window.location.href = "/file/json/actions/download?filename=" + filename;
     }
 }
+
+function testSaveJsonFile() {
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "json", true);
+    xhr.onload = function (e) {
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+                console.log(xhr.responseText);
+            } else {
+                console.log(xhr.statusText);
+            }
+        }
+    }
+    xhr.onerror = function (e) {
+        console.log(xhr.statusText);
+    }
+    var data = new FormData();
+    data.append('type', 'FeatureCollection');
+    data.append('name', '100000.json');
+    data.append('url', 'D:/temp/100000.json');
+    xhr.send(data);
+}
+// testSaveJsonFile();
