@@ -1,6 +1,8 @@
 package com.dxw.service;
 
 
+import java.io.File;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -31,4 +33,13 @@ public interface FileService {
      * @return String
      */
     String download(HttpServletResponse response, String filename);
+
+    /**
+     * 解析地图JOSN文件信息
+     * @author dxw
+     * @date 2020/12/29 11:17
+     * @param
+     * @return
+     */
+    void analyze(File file);
 }

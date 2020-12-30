@@ -12,13 +12,20 @@ import java.util.Optional;
 import java.util.UUID;
 
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.LineIterator;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.dxw.entity.po.Feature;
+import com.dxw.mapper.FeatureMapper;
 import com.dxw.service.FileService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -35,6 +42,8 @@ public class FileServiceImpl implements FileService {
 
     @Value("${file.temp}")
     private String tempFilePath;
+    @Resource
+    private FeatureMapper featureMapper;
 
     @Override
     public String upload(HttpServletRequest request, MultipartFile file) {
@@ -63,6 +72,7 @@ public class FileServiceImpl implements FileService {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        analyze(tempFile);
         log.info("上传成功: 文件名({}), 大小({}), 路径({})", name, size, path);
         return filename;
     }
@@ -116,5 +126,46 @@ public class FileServiceImpl implements FileService {
             }
         }
         return "下载成功";
+    }
+
+    @Override
+    public void analyze(File file) {
+        if (Objects.isNull(file) || !file.exists()) {
+            log.error("参数错误: {}", file);
+            return;
+        }
+        LineIterator lineIterator = null;
+        try {
+            lineIterator = FileUtils.lineIterator(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if (Objects.isNull(lineIterator)) {
+            log.error("获取迭代器失败: {}", lineIterator);
+            return;
+        }
+        StringBuilder content = new StringBuilder();
+        while (lineIterator.hasNext()) {
+            String next = lineIterator.next();
+            System.out.println(next);
+            content.append(next);
+        }
+        JSONObject json = new JSONObject(content.toString());
+        System.out.println(json.toString());
+        JSONArray features =  json.getJSONArray("features");
+        for (int i = 0; i < features.length(); i++) {
+            JSONObject fea = features.getJSONObject(i);
+            String type = fea.getString("type");
+            JSONObject pro = fea.getJSONObject("properties");
+            Integer adcode = pro.getInt("adcode");
+            String name = pro.getString("name");
+            Integer childrenNum = pro.getInt("childrenNum");
+            String level = pro.getString("level");
+            String parent = pro.getJSONObject("parent").getString("adcode");
+            String geometryType = fea.getJSONObject("geometry").getString("type");
+            String coordinates = fea.getJSONObject("geometry").getString("coordinates");
+            Feature feature = new Feature(adcode, parent, name, type, pro.toString(), childrenNum, level, geometryType, coordinates);
+            featureMapper.insert(feature);
+        }
     }
 }

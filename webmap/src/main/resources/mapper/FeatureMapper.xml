@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dxw.mapper.FeatureMapper">
+    <insert id="insert" parameterType="com.dxw.entity.po.Feature">
+        insert into feature(adcode, parent, name, type, properties, childrenNum, level, geometry_type, coordinates)
+        value (#{adcode}, #{parent}, #{name}, #{type}, #{properties}, #{childrenNum}, #{level}, #{geometryType}, #{coordinates})
+    </insert>
+    <delete id="delete" parameterType="java.lang.Integer">
+        delete from feature where cdconde = #{cdcode}
+    </delete>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultType="com.dxw.entity.po.Feature">
+        select adcode, parent, name, type, properties, childrenNum, level, geometry_type, coordinates from feature where adcode = #{adcode}
+    </select>
+    <select id="selectList" parameterType="com.dxw.entity.po.Feature" resultType="java.util.List">
+        select adcode, parent, name, type, properties, childrenNum, level, geometry_type, coordinates from feature
+        <where>
+            <if test="parent != null">
+                parent = #{parent}
+            </if>
+            <if test="name != null">
+                name = #{name}
+            </if>
+            <if test="type != null">
+                type = #{type}
+            </if>
+            <if test="childrenNum != null">
+                childrenNum = #{childrenNum}
+            </if>
+            <if test="level != null">
+                level = #{level}
+            </if>
+            <if test="parent != null">
+                geometry_type = #{geometryType}
+            </if>
+        </where>
+    </select>
+    <select id="selectAll" resultType="java.util.List">
+        select adcode, parent, name, type, properties, childrenNum, level, geometry_type, coordinates from feature
+    </select>
+</mapper>
