@@ -161,7 +161,7 @@ public class FileServiceImpl implements FileService {
             String name = pro.getString("name");
             Integer childrenNum = pro.getInt("childrenNum");
             String level = pro.getString("level");
-            String parent = pro.getJSONObject("parent").getString("adcode");
+            Integer parent = pro.getJSONObject("parent").getInt("adcode");
             String geometryType = fea.getJSONObject("geometry").getString("type");
             String coordinates = fea.getJSONObject("geometry").getString("coordinates");
             Feature feature = new Feature(adcode, parent, name, type, pro.toString(), childrenNum, level, geometryType, coordinates);

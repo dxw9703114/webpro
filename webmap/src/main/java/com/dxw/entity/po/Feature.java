@@ -12,13 +12,22 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class Feature {
+    /** 要素代码 */
     private Integer adcode;
-    private String parent;
+    /** 父要素 */
+    private Integer parent;
+    /** 名称 */
     private String name;
+    /** 类型 */
     private String type;
+    /** 信息 */
     private String properties;
+    /** 子要素数量 */
     private Integer childrenNum;
+    /** 级别 */
     private String level;
+    /** 图形类型 */
     private String geometryType;
+    /** 坐标 */
     private String coordinates;
 }
