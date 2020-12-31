@@ -11,7 +11,7 @@
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultType="com.dxw.entity.po.Feature">
         select adcode, parent, name, type, properties, childrenNum, level, geometry_type, coordinates from feature where adcode = #{adcode}
     </select>
-    <select id="selectList" parameterType="com.dxw.entity.po.Feature" resultType="java.util.List">
+    <select id="selectList" parameterType="com.dxw.entity.po.Feature" resultType="com.dxw.entity.po.Feature">
         select adcode, parent, name, type, properties, childrenNum, level, geometry_type, coordinates from feature
         <where>
             <if test="parent != null">
@@ -34,7 +34,7 @@
             </if>
         </where>
     </select>
-    <select id="selectAll" resultType="java.util.List">
+    <select id="selectAll" resultType="com.dxw.entity.po.Feature">
         select adcode, parent, name, type, properties, childrenNum, level, geometry_type, coordinates from feature
     </select>
 </mapper>

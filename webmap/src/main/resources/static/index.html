@@ -16,7 +16,11 @@
             </form>
             <button onclick="upload()">上传</button>
             <button onclick="download()">下载</button>
+            <button onclick="doPrint()">打印</button>
         </div>
+        <iframe style="display: none" id="printIframe" src="/pdf/user.pdf" ></iframe>
+
+        <script src="js/jquery-3.5.1/jquery-3.5.1.js"></script>
         <script src="js/index.js"></script>
     </body>
 </html>

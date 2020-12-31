@@ -1,8 +1,8 @@
 spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://106.52.184.39:3306/webmap
-    username: root
+    url: jdbc:mysql://106.52.184.39:3306/webmap?characterEncoding=utf8
+    username: db_test
     password: Dxw123456
 mybatis:
   configuration:

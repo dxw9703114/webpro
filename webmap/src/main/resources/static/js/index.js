@@ -52,7 +52,7 @@ function upload() {
     console.log(file);
     var xhr = new XMLHttpRequest();
     xhr.open('POST', '/file/json/actions/upload', true);
-    xhr.onload = function (e) {
+    xhr.onload = function () {
         if (xhr.readyState === 4) {
             if (xhr.status === 200) {
                 console.log(xhr.responseText);
@@ -61,7 +61,7 @@ function upload() {
             }
         }
     }
-    xhr.onerror = function (e) {
+    xhr.onerror = function () {
         console.log(xhr.statusText);
     }
     xhr.upload.onprogress = function(event) {
@@ -79,10 +79,77 @@ function download() {
     }
 }
 
-function testSaveJsonFile() {
+function req(method, url, data, success, error, async) {
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", "json", true);
-    xhr.onload = function (e) {
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+                success(xhr.responseText);
+            } else {
+                error(xhr.responseText);
+            }
+        }
+    }
+    xhr.onerror = function () {
+        console.error(xhr.statusText);
+    }
+    var sendData = null;
+    if (!method) {
+        method = 'GET';
+    }
+    if (method.toLowerCase() === 'get') {
+        if (data) {
+            if (typeof data === 'object' && !Array.isArray(data)) {
+                var params = '';
+                var keys = Object.keys(data);
+                for (var key in keys) {
+                    var value = data[key];
+                    params += ('&' + key + '=' + value);
+                }
+                var parIndex = url.lastIndexOf('?');
+                if (parIndex === -1) {
+                    url += ('?' + params);
+                } else {
+                    url += params;
+                }
+            }
+        }
+    } else if (method.toLowerCase() === 'post') {
+        if (data && typeof data === 'object' && !Array.isArray(data)) {
+            sendData = new FormData();
+            var keys = Object.keys(data);
+            for (var key in keys) {
+                var value = data[key];
+                sendData.append(key, value);
+            }
+        }
+    } else if (method.toLowerCase() === 'put') {
+        if (data && typeof data === 'object' && !Array.isArray(data)) {
+            sendData = new FormData();
+            var keys = Object.keys(data);
+            for (var key in keys) {
+                var value = data[key];
+                sendData.append(key, value);
+            }
+        }
+    } else if (method.toLowerCase() === 'delete') {
+        if (data && typeof data === 'object' && !Array.isArray(data)) {
+            sendData = new FormData();
+            var keys = Object.keys(data);
+            for (var key in keys) {
+                var value = data[key];
+                sendData.append(key, value);
+            }
+        }
+    }
+    xhr.open(method, url, async);
+    xhr.send(sendData);
+}
+
+function testXMLHttpRequest() {
+    var xhr = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+    xhr.open("POST", "feature", true);
+    xhr.onreadystatechange = function (e) {
         if (xhr.readyState === 4) {
             if (xhr.status === 200) {
                 console.log(xhr.responseText);
@@ -95,9 +162,33 @@ function testSaveJsonFile() {
         console.log(xhr.statusText);
     }
     var data = new FormData();
-    data.append('type', 'FeatureCollection');
-    data.append('name', '100000.json');
-    data.append('url', 'D:/temp/100000.json');
+    data.append('adcode', '100000');
+    data.append('name', '中华人民共和国');
+    data.append('type', 'Feature');
+    data.append('properties', '{adcode:100000,name:"中华人民共和国",childrenNum:34,level:"country"}');
+    data.append('childrenNum', '34');
+    data.append('level', 'country');
+    data.append('geometryType', 'MultiPolygon');
     xhr.send(data);
 }
-// testSaveJsonFile();
+// testXMLHttpRequest();
+
+function testAjax() {
+    $.ajax({
+        type: 'GET',
+        url: 'feature/all',
+        dataType: 'json',
+        success: function (response) {
+            console.log(response);
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    });
+}
+// testAjax();
+
+function doPrint() {
+    var iframe = document.getElementById('printIframe');
+    iframe.contentWindow.print();
+}
