@@ -1,13 +1,16 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
+    <Header/>
     <router-view/>
   </div>
 </template>
 
 <script>
+import Main from './pages/home/Home'
+import Header from './pages/header/Header'
 export default {
-  name: 'App'
+  name: 'App',
+  components: {Header, Main}
 }
 </script>
 
@@ -18,6 +21,5 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
 }
 </style>

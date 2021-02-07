@@ -57,6 +57,6 @@ public class ImageController {
 
     @GetMapping("download/{imgname}")
     public void download(@PathVariable("imgname") String imgname) {
-        
+
     }
 }
