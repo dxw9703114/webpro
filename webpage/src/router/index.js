@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '../pages/home/Home'
 import WebMap from '../pages/webmap/WebMap'
+import Excel from '../pages/excel/Excel'
 
 Vue.use(Router)
 
@@ -22,6 +23,11 @@ export default new Router({
       path: '/webmap',
       name: 'webmap',
       component: WebMap
+    },
+    {
+      path: '/excel',
+      name: 'excel',
+      component: Excel
     }
   ]
 })

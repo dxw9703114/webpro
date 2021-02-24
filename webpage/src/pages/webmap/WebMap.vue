@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <el-main>
     <h1>{{title}}</h1>
     <div id='map' class='map'></div>
-  </div>
+  </el-main>
 </template>
 
 <script>
@@ -11,7 +11,7 @@ export default {
   name: 'WebMap',
   data () {
     return {
-      title: 'Web Map Page'
+      title: 'Web地图'
     }
   },
   mounted () {
@@ -19,7 +19,6 @@ export default {
   },
   methods: {
     init () {
-      debugger
       const chinaSource = new ol.source.Vector({
         projection: 'EPSG:3857',
         url: '../../../static/geojson/100000_full.json',
@@ -72,5 +71,5 @@ export default {
 </script>
 
 <style>
-@import '../../assets/css/webmap.less';
+
 </style>

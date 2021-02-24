@@ -1,5 +1,18 @@
 <template>
-  <h1>{{title}}</h1>
+  <el-main>
+    <h1>{{title}}</h1>
+    <el-row :gutter="20">
+      <el-col :span="8">
+        <el-card shadow="hover">图片管理</el-card>
+      </el-col>
+      <el-col :span="8">
+        <el-card shadow="hover">Web地图</el-card>
+      </el-col>
+      <el-col :span="8">
+        <el-card shadow="hover">Excel工具</el-card>
+      </el-col>
+    </el-row>
+  </el-main>
 </template>
 
 <script>
