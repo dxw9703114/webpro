@@ -1,5 +1,0 @@
-server:
-  port: 8998
-img:
-  path: /data/wwwroot/default
-  testpath: D:\temp
