@@ -96,11 +96,8 @@ public class FileServiceImpl implements FileService {
             e.printStackTrace();
         }
         byte[] buffer = new byte[1024];
-        FileInputStream fis = null;
-        BufferedInputStream bis = null;
-        try {
-            fis = new FileInputStream(file);
-            bis = new BufferedInputStream(fis);
+        try (FileInputStream fis = new FileInputStream(file);
+             BufferedInputStream bis = new BufferedInputStream(fis)) {
             OutputStream os = response.getOutputStream();
             int i = bis.read(buffer);
             while (i != -1) {
@@ -109,21 +106,6 @@ public class FileServiceImpl implements FileService {
             }
         } catch (IOException e) {
             e.printStackTrace();
-        } finally {
-            if (Objects.nonNull(bis)) {
-                try {
-                    bis.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-            if (Objects.nonNull(fis)) {
-                try {
-                    fis.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
         }
         return "下载成功";
     }
@@ -147,11 +129,11 @@ public class FileServiceImpl implements FileService {
         StringBuilder content = new StringBuilder();
         while (lineIterator.hasNext()) {
             String next = lineIterator.next();
-            System.out.println(next);
+            log.info(next);
             content.append(next);
         }
         JSONObject json = new JSONObject(content.toString());
-        System.out.println(json.toString());
+        log.info(json.toString());
         JSONArray features =  json.getJSONArray("features");
         for (int i = 0; i < features.length(); i++) {
             JSONObject fea = features.getJSONObject(i);

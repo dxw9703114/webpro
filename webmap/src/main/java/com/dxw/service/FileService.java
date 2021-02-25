@@ -38,8 +38,8 @@ public interface FileService {
      * 解析地图JOSN文件信息
      * @author dxw
      * @date 2020/12/29 11:17
-     * @param
-     * @return
+     * @param file 文件
+     * @return void
      */
     void analyze(File file);
 }

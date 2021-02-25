@@ -12,7 +12,7 @@
       <el-menu-item index="home">首页</el-menu-item>
       <el-submenu index="2">
         <template slot="title">我的工作台</template>
-        <el-menu-item index="2-1">图片管理</el-menu-item>
+        <el-menu-item index="img">图片管理</el-menu-item>
         <el-menu-item index="webmap">Web地图</el-menu-item>
         <el-menu-item index="excel">Excel工具</el-menu-item>
         <el-submenu index="2-4">
