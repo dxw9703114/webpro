@@ -11,7 +11,7 @@
         :on-preview="handlePictureCardPreview"
         :before-remove="beforeRemove"
         :file-list="fileList">
-        <i class="el-icon-plus"></i>
+        <em class="el-icon-plus"></em>
       </el-upload>
       <el-dialog :visible.sync="dialogVisible">
         <img width="100%" :src="dialogImageUrl" alt="">
@@ -53,7 +53,7 @@ export default {
         // this.removeFromFileList(file, fileList)
         this.$ajax({
           method: 'delete',
-          url: '/image/'+file.id
+          url: `/image/${file.id}`
         }).then(res => {
           this.$message({
             type: 'success',
