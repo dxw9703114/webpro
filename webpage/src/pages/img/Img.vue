@@ -3,17 +3,19 @@
     <div class="el-main-header">
       <h4>图片管理</h4>
     </div>
-    <el-upload
-      action=""
-      list-type="picture-card"
-      :http-request="uploadImg"
-      :on-preview="handlePictureCardPreview"
-      :on-remove="handleRemove">
-      <i class="el-icon-plus"></i>
-    </el-upload>
-    <el-dialog :visible.sync="dialogVisible">
-      <img width="100%" :src="dialogImageUrl" alt="">
-    </el-dialog>
+    <div class="el-main-content">
+      <el-upload
+        action=""
+        list-type="picture-card"
+        :http-request="uploadImg"
+        :on-preview="handlePictureCardPreview"
+        :on-remove="handleRemove">
+        <i class="el-icon-plus"></i>
+      </el-upload>
+      <el-dialog :visible.sync="dialogVisible">
+        <img width="100%" :src="dialogImageUrl" alt="">
+      </el-dialog>
+    </div>
   </el-main>
 </template>
 
@@ -54,12 +56,18 @@ export default {
 </script>
 
 <style scoped>
-.el-main-header{
-  display: inline-block;
-  float: left;
-  width: 100%;
-}
+  .el-main-header{
+    display: inline-block;
+    float: left;
+    width: 100%;
+  }
   .el-main-header h4{
+    float: left;
+  }
+  .el-main-content{
+    float: left;
+  }
+  el-upload--picture-card{
     float: left;
   }
 </style>
