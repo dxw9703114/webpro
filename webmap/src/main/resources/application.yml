@@ -9,3 +9,10 @@ spring:
     static-path-pattern: /**
 file:
   temp: D:\temp
+#  img: /usr/img
+  img: D:\temp
+url:
+  image-url: http://106.52.184.39/img/
+mybatis:
+  configuration:
+    log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl

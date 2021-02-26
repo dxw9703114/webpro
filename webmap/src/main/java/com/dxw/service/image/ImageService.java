@@ -1,4 +1,4 @@
-package com.dxw.service;
+package com.dxw.service.image;
 
 import org.springframework.web.multipart.MultipartFile;
 
@@ -16,23 +16,11 @@ public interface ImageService {
      * ImageService
      *
      * @description
-     * @param
-     * @return
+     * @param multipartFile 文件
+     * @return String 访问路径
      * @author dxw
      * @date 2021/2/25 11:22
      * @version v1.0.0
      */
     String upload(MultipartFile multipartFile);
-
-    /**
-     * ImageService
-     *
-     * @description
-     * @param
-     * @return
-     * @author dxw
-     * @date 2021/2/25 11:23
-     * @version v1.0.0
-     */
-    void download();
 }

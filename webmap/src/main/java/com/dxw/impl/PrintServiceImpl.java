@@ -1,4 +1,4 @@
-package com.dxw.service.impl;
+package com.dxw.impl;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -27,7 +27,7 @@ public class PrintServiceImpl implements PrintService {
         boolean result = false;
         Document document = null;
         try {
-            document = new Document(new PdfReader(paths[0]).getPageSize(1));
+            document = new Document(new PdfReader(paths[0]).getPageSize(1))
             PdfCopy copy = new PdfCopy(document, new FileOutputStream(newPath));
             document.open();
             for (int i = 0; i < paths.length; i++) {

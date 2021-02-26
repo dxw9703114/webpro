@@ -4,8 +4,9 @@
       <h4>图片管理</h4>
     </div>
     <el-upload
-      action="https://jsonplaceholder.typicode.com/posts/"
+      action=""
       list-type="picture-card"
+      :http-request="uploadImg"
       :on-preview="handlePictureCardPreview"
       :on-remove="handleRemove">
       <i class="el-icon-plus"></i>
@@ -18,7 +19,7 @@
 
 <script>
 export default {
-  name: 'Image',
+  name: 'Img',
   data () {
     return {
       dialogImageUrl: '',
@@ -26,15 +27,27 @@ export default {
     }
   },
   methods: {
-    goBack () {
-      this.$router.push({path: '/'})
-    },
     handleRemove (file, fileList) {
       console.log(file, fileList)
     },
     handlePictureCardPreview (file) {
       this.dialogImageUrl = file.url
       this.dialogVisible = true
+    },
+    uploadImg (item) {
+      const file = item.file
+      const form = new FormData()
+      form.append('file', file)
+      this.$ajax({
+        method: 'post',
+        url: '/image/upload',
+        // 参数拼接到url
+        params: {},
+        data: form
+      })
+        .then(resp => {
+          console.log(resp)
+        })
     }
   }
 }
