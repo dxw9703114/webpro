@@ -17,6 +17,7 @@ module.exports = {
       },
       '/image' : {
         target: 'http://localhost:8999',
+        // target: 'http://106.52.184.39:8999',
         changeOrigin: true
       }
     },

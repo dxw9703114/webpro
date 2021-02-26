@@ -1,5 +1,7 @@
 package com.dxw.mapper.image;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 
 import com.dxw.entity.po.Image;
@@ -17,5 +19,9 @@ import com.dxw.entity.po.Image;
 public interface ImageMapper {
 
     int insert(Image image);
+
+    List<Image> list();
+
+    int deleteById(String id);
 
 }

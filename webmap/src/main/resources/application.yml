@@ -9,8 +9,9 @@ spring:
     static-path-pattern: /**
 file:
   temp: D:\temp
-#  img: /usr/img
   img: D:\temp
+#  temp: /usr/temp
+#  img: /usr/img
 url:
   image-url: http://106.52.184.39/img/
 mybatis:

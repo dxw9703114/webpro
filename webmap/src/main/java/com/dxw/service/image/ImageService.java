@@ -1,6 +1,10 @@
 package com.dxw.service.image;
 
+import java.util.List;
+
 import org.springframework.web.multipart.MultipartFile;
+
+import com.dxw.entity.po.Image;
 
 /**
  *
@@ -23,4 +27,8 @@ public interface ImageService {
      * @version v1.0.0
      */
     String upload(MultipartFile multipartFile);
+
+    List<Image> queryList();
+
+    void deleteById(String id);
 }

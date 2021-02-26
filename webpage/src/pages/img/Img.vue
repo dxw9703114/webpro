@@ -9,7 +9,8 @@
         list-type="picture-card"
         :http-request="uploadImg"
         :on-preview="handlePictureCardPreview"
-        :on-remove="handleRemove">
+        :before-remove="beforeRemove"
+        :file-list="fileList">
         <i class="el-icon-plus"></i>
       </el-upload>
       <el-dialog :visible.sync="dialogVisible">
@@ -25,12 +26,53 @@ export default {
   data () {
     return {
       dialogImageUrl: '',
-      dialogVisible: false
+      dialogVisible: false,
+      fileList: []
     }
   },
+  mounted () {
+    this.queryList()
+  },
   methods: {
-    handleRemove (file, fileList) {
+    queryList () {
+      this.$ajax({
+        method: 'get',
+        url: '/image/list'
+      }).then(res => {
+        console.log(res)
+        this.fileList = res.data
+      })
+    },
+    beforeRemove (file, fileList) {
       console.log(file, fileList)
+      this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        // this.removeFromFileList(file, fileList)
+        this.$ajax({
+          method: 'delete',
+          url: '/image/'+file.id
+        }).then(res => {
+          this.$message({
+            type: 'success',
+            message: '删除成功!'
+          })
+          this.queryList()
+        }).catch(() => {
+          this.$message({
+            type: 'error',
+            message: '删除失败!'
+          })
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        })
+      })
+      return false
     },
     handlePictureCardPreview (file) {
       this.dialogImageUrl = file.url
@@ -49,7 +91,15 @@ export default {
       })
         .then(resp => {
           console.log(resp)
+          this.queryList()
         })
+    },
+    removeFromFileList (file, fileList) {
+      for (let i = 0; i < fileList.length; i++) {
+        if (fileList[i].uid === file.uid) {
+          fileList.splice(i, 1);
+        }
+      }
     }
   }
 }

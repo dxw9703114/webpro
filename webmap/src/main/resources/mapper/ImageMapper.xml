@@ -13,4 +13,10 @@
         values
         (#{id}, #{imageName}, #{size}, #{url})
     </insert>
+    <select id="list" resultMap="baseMap">
+        select c_id, c_image_name, n_size, c_url from t_image
+    </select>
+    <delete id="deleteById" parameterType="String">
+        delete from t_image where c_id = #{id}
+    </delete>
 </mapper>
