@@ -93,13 +93,6 @@ export default {
           console.log(resp)
           this.queryList()
         })
-    },
-    removeFromFileList (file, fileList) {
-      for (let i = 0; i < fileList.length; i++) {
-        if (fileList[i].uid === file.uid) {
-          fileList.splice(i, 1);
-        }
-      }
     }
   }
 }
