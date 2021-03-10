@@ -8,5 +8,5 @@ package com.dxw.service.excel;/**
  * @version 1.0.0
  */
 public interface ExcelService {
-    void testDealExcel();
+    String testDealExcel();
 }

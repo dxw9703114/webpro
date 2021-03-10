@@ -24,7 +24,7 @@ public class ExcelController {
     private ExcelService excelService;
 
     @GetMapping("test")
-    public void testDealExcel() {
-        excelService.testDealExcel();
+    public String testDealExcel() {
+        return excelService.testDealExcel();
     }
 }
